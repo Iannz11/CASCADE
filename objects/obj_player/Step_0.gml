@@ -20,3 +20,11 @@ if (colidiu) {
         image_index = 0;
     }
 }
+
+if (keyboard_check_pressed(ord("Q"))) {
+    addItem("dorgaGra", 1);
+}
+
+if (keyboard_check_pressed(ord("E"))) {
+    usarItem(0);
+}
