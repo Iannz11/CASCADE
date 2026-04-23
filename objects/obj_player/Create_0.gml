@@ -8,6 +8,8 @@ hp = 50;
 iframe = 0;
 iframe_max = 100; 
 escala = image_xscale;
+atk = 20;
+cooldown_atk = 0;
 
 inventario = [];
 
@@ -116,5 +118,18 @@ function usarItem (indice){
 
     hp = clamp(hp, 0, hp_max);
 }
-	
+
+function atacar() {
+
+    var inimigo = instance_nearest(x, y, obj_inimigo);
+
+    if (inimigo != noone) {
+
+        var dist = point_distance(x, y, inimigo.x, inimigo.y);
+
+        if (dist < 150) {
+            inimigo.hp -= atk;
+        }
+    }
+}
 

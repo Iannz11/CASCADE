@@ -28,3 +28,14 @@ if (keyboard_check_pressed(ord("Q"))) {
 if (keyboard_check_pressed(ord("E"))) {
     usarItem(0);
 }
+
+if (cooldown_atk > 0) {
+    cooldown_atk--;
+}
+
+if (keyboard_check_pressed(ord("Z")) && cooldown_atk <= 0) {
+
+    atacar();
+
+    cooldown_atk = 1; // ainda precisamos de um valor
+}
