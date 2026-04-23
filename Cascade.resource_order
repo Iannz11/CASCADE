@@ -1,0 +1,19 @@
+{
+  "FolderOrderSettings":[
+    {"name":"objetos","order":2,"path":"folders/objetos.yy",},
+    {"name":"sprites","order":1,"path":"folders/sprites.yy",},
+    {"name":"consumo","order":4,"path":"folders/sprites/consumo.yy",},
+    {"name":"mapa","order":5,"path":"folders/sprites/mapa.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"layer_obj","order":1,"path":"objects/layer_obj/layer_obj.yy",},
+    {"name":"obj_inimigo","order":4,"path":"objects/obj_inimigo/obj_inimigo.yy",},
+    {"name":"obj_layerN","order":5,"path":"objects/obj_layerN/obj_layerN.yy",},
+    {"name":"obj_player_test","order":3,"path":"objects/obj_player_test/obj_player_test.yy",},
+    {"name":"obj_player","order":2,"path":"objects/obj_player/obj_player.yy",},
+    {"name":"spr_inimigo","order":3,"path":"sprites/spr_inimigo/spr_inimigo.yy",},
+    {"name":"spr_player","order":1,"path":"sprites/spr_player/spr_player.yy",},
+    {"name":"Sprite3","order":3,"path":"sprites/Sprite3/Sprite3.yy",},
+    {"name":"Sprite4","order":2,"path":"sprites/Sprite4/Sprite4.yy",},
+  ],
+}
