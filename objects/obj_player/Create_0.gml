@@ -10,6 +10,7 @@ iframe_max = 100;
 escala = image_xscale;
 atk = 20;
 cooldown_atk = 0;
+atacando = false;
 
 inventario = [];
 
@@ -121,15 +122,51 @@ function usarItem (indice){
 
 function atacar() {
 
-    var inimigo = instance_nearest(x, y, obj_inimigo);
+    if (keyboard_check_pressed(ord("J")) && !atacando) {
 
-    if (inimigo != noone) {
+        atacando = true;
 
-        var dist = point_distance(x, y, inimigo.x, inimigo.y);
+        sprite_index = spr_player_ataque;
+        image_index = 0;
 
-        if (dist < 150) {
-            inimigo.hp -= atk;
-        }
+        var hitbox = instance_create_layer(x + (20 * image_xscale), y,"Instances", obj_hitbox);
+       
+        hitbox.alarm[0] = 5;
     }
+	if (atacando && image_index >= image_number - 1) {
+		atacando = false;
+	}
+	if (!atacando) {
+
+		if (obj_hitbox) {
+		    sprite_index = spr_player;
+		 }else{
+			 sprite_index = spr_player;
+		 }
+	}
+
+}
+
+function colisao(){
+	var colidiu = place_meeting(x + velh, y, obj_bloco) or place_meeting(x, y + velv, obj_bloco);
+
+	if (colidiu) {
+    image_index = 0;
+    image_speed = 0;
+	} else {
+    var movendo = (velh != 0) or (velv != 0);
+
+    if (movendo) {
+        image_speed = 1;
+
+        
+        if (floor(image_index) == 0) {
+            image_index = 3;
+        }
+    } else {
+        image_speed = 0;
+        image_index = 0;
+    }
+}
 }
 
