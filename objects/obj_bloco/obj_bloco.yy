@@ -28,9 +28,12 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"boneco_spr",
-    "path":"sprites/boneco_spr/boneco_spr.yy",
+    "name":"spr_chao",
+    "path":"sprites/spr_chao/spr_chao.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_chao",
+    "path":"sprites/spr_chao/spr_chao.yy",
+  },
   "visible":true,
 }

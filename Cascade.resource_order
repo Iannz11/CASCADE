@@ -6,6 +6,7 @@
     {"name":"consumo","order":4,"path":"folders/sprites/consumo.yy",},
     {"name":"mapa","order":5,"path":"folders/sprites/mapa.yy",},
     {"name":"player_animations","order":6,"path":"folders/sprites/player_animations.yy",},
+    {"name":"tiles","order":4,"path":"folders/tiles.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"layer_obj","order":1,"path":"objects/layer_obj/layer_obj.yy",},
@@ -13,9 +14,13 @@
     {"name":"obj_layerN","order":5,"path":"objects/obj_layerN/obj_layerN.yy",},
     {"name":"obj_player_test","order":3,"path":"objects/obj_player_test/obj_player_test.yy",},
     {"name":"obj_player","order":2,"path":"objects/obj_player/obj_player.yy",},
+    {"name":"spr_chao","order":2,"path":"sprites/spr_chao/spr_chao.yy",},
     {"name":"spr_inimigo","order":3,"path":"sprites/spr_inimigo/spr_inimigo.yy",},
     {"name":"spr_player_ataque","order":1,"path":"sprites/spr_player_ataque/spr_player_ataque.yy",},
+    {"name":"spr_sky","order":1,"path":"sprites/spr_sky/spr_sky.yy",},
+    {"name":"Sprite10","order":3,"path":"sprites/Sprite10/Sprite10.yy",},
     {"name":"Sprite3","order":3,"path":"sprites/Sprite3/Sprite3.yy",},
     {"name":"Sprite4","order":2,"path":"sprites/Sprite4/Sprite4.yy",},
+    {"name":"TileSet1","order":2,"path":"tilesets/TileSet1/TileSet1.yy",},
   ],
 }
