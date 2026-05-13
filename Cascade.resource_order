@@ -14,6 +14,7 @@
     {"name":"obj_layerN","order":5,"path":"objects/obj_layerN/obj_layerN.yy",},
     {"name":"obj_player_test","order":3,"path":"objects/obj_player_test/obj_player_test.yy",},
     {"name":"obj_player","order":2,"path":"objects/obj_player/obj_player.yy",},
+    {"name":"Room2","order":5,"path":"rooms/Room2/Room2.yy",},
     {"name":"spr_chao","order":2,"path":"sprites/spr_chao/spr_chao.yy",},
     {"name":"spr_inimigo","order":3,"path":"sprites/spr_inimigo/spr_inimigo.yy",},
     {"name":"spr_player_ataque","order":1,"path":"sprites/spr_player_ataque/spr_player_ataque.yy",},
