@@ -1,6 +1,6 @@
 // Inherit the parent event
 event_inherited();
-
+audio_play_sound(Battle_theme, 1, true);
 velocidade = 5;
 gravidade = .3;
 hp_max = 100;
@@ -8,8 +8,8 @@ hp = 50;
 iframe = 0;
 iframe_max = 100; 
 escala = image_xscale;
-atk = 20;
-cooldown_atk = 0;
+atk = 100;
+cooldown_atk = 20;
 atacando = false;
 
 inventario = [];
@@ -40,22 +40,22 @@ function input_player()
 {
 	var _esquerda, _direita, _pulo, _direcao;
 	
-	_direita = keyboard_check(ord("A"));
-	_esquerda = keyboard_check(ord("D"));
+	_esquerda = keyboard_check(ord("A"));
+	_direita = keyboard_check(ord("D"));
 	
-	if(_esquerda)
+	if(_direita)
 {
     image_xscale = escala;
 }
 
-if(_direita)
+if(_esquerda)
 {
     image_xscale = -escala;
 }
 	
 	_pulo = keyboard_check(vk_space);
 	
-	velh = (_esquerda - _direita) * velocidade;
+	velh = (_direita - _esquerda) * velocidade;
 	
 	var _em_chao = place_meeting(x, y + 1, obj_bloco);
 	var _iframe = place_meeting(x, y + 1, obj_inimigo);
@@ -120,53 +120,70 @@ function usarItem (indice){
     hp = clamp(hp, 0, hp_max);
 }
 
-function atacar() {
-
-    if (keyboard_check_pressed(ord("J")) && !atacando) {
-
+function atacar()
+{
+    if (keyboard_check_pressed(ord("J")) && !atacando)
+    {
         atacando = true;
 
         sprite_index = spr_player_ataque;
         image_index = 0;
 
-        var hitbox = instance_create_layer(x + (20 * image_xscale), y,"Instances", obj_hitbox);
-       
+        var offset = 60;
+
+        if image_xscale < 0
+        {
+            offset = -60;
+        }
+
+        var hitbox = instance_create_layer(
+            x + offset,
+            y - 20,
+            "Instances",
+            obj_hitbox
+        );
+
         hitbox.alarm[0] = 5;
     }
-	if (atacando && image_index >= image_number - 1) {
-		atacando = false;
-	}
-	if (!atacando) {
 
-		if (obj_hitbox) {
-		    sprite_index = spr_player;
-		 }else{
-			 sprite_index = spr_player;
-		 }
-	}
+    if (atacando && image_index >= image_number - 1)
+    {
+        atacando = false;
+    }
 
+    if (!atacando)
+    {
+        sprite_index = spr_player;
+    }
 }
 
-function colisao(){
-	var colidiu = place_meeting(x + velh, y, obj_bloco) or place_meeting(x, y + velv, obj_bloco);
+function colisao() //mudei a colisão pois tava conflitando com ataque
+{
+    var colidiu = place_meeting(x + velh, y, obj_bloco)
+               or place_meeting(x, y + velv, obj_bloco);
 
-	if (colidiu) {
-    image_index = 0;
-    image_speed = 0;
-	} else {
-    var movendo = (velh != 0) or (velv != 0);
+    if (atacando) return;
 
-    if (movendo) {
-        image_speed = 1;
-
-        
-        if (floor(image_index) == 0) {
-            image_index = 3;
-        }
-    } else {
+    if (colidiu)
+    {
         image_speed = 0;
         image_index = 0;
     }
-}
-}
+    else
+    {
+        var movendo = (velh != 0) or (velv != 0);
 
+        if (movendo)
+        {
+            image_speed = 1;
+
+            if (floor(image_index) == 0)
+                image_index = 3;
+        }
+        else
+        {
+            image_speed = 0;
+            image_index = 0;
+        }
+    }
+}

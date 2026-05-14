@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"Battle_theme",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":84.03592,
+  "exportDir":"",
+  "name":"Battle_theme",
+  "parent":{
+    "name":"Cascade",
+    "path":"Cascade.yyp",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"Battle_theme.mp3",
+  "volume":1.0,
+}

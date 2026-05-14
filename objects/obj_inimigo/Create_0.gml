@@ -1,4 +1,6 @@
 event_inherited();
+state = "idle";
+attack_cooldown = 0;
 
 hp = 30;
 
