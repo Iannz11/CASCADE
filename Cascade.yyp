@@ -24,7 +24,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.3.217",
+    "IDEVersion":"2024.14.4.222",
   },
   "name":"Cascade",
   "resources":[
@@ -44,6 +44,7 @@
     {"id":{"name":"spr_enemy_idle","path":"sprites/spr_enemy_idle/spr_enemy_idle.yy",},},
     {"id":{"name":"spr_enemy_run","path":"sprites/spr_enemy_run/spr_enemy_run.yy",},},
     {"id":{"name":"spr_player_ataque","path":"sprites/spr_player_ataque/spr_player_ataque.yy",},},
+    {"id":{"name":"spr_player_idle","path":"sprites/spr_player_idle/spr_player_idle.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
     {"id":{"name":"spr_pulo","path":"sprites/spr_pulo/spr_pulo.yy",},},
     {"id":{"name":"spr_sky","path":"sprites/spr_sky/spr_sky.yy",},},

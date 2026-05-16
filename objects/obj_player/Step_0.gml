@@ -1,6 +1,9 @@
 input_player();
+grav()
 hp_player();
 colisao();
+
+
 
 if hp <= 0
 {

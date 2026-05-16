@@ -1,6 +1,7 @@
 // Inherit the parent event
 event_inherited();
-audio_play_sound(Battle_theme, 1, true);
+// música fdp da porr@!!!!!!!!!!!
+//audio_play_sound(Battle_theme, 1, true);
 velocidade = 5;
 gravidade = .3;
 hp_max = 100;
@@ -11,6 +12,9 @@ escala = image_xscale;
 atk = 100;
 cooldown_atk = 20;
 atacando = false;
+pulos = 0;
+max_pulo = 1;
+
 
 inventario = [];
 
@@ -42,35 +46,30 @@ function input_player()
 	
 	_esquerda = keyboard_check(ord("A"));
 	_direita = keyboard_check(ord("D"));
-	
-	if(_direita)
-{
-    image_xscale = escala;
-}
-
-if(_esquerda)
-{
-    image_xscale = -escala;
-}
-	
 	_pulo = keyboard_check(vk_space);
+	var _em_chao = place_meeting(x, y + 2, obj_bloco);
 	
-	velh = (_direita - _esquerda) * velocidade;
+	_direcao = _esquerda - _direita;
 	
-	var _em_chao = place_meeting(x, y + 1, obj_bloco);
-	var _iframe = place_meeting(x, y + 1, obj_inimigo);
-	
-	if(_em_chao)
+if(_direcao != 0){
+	image_xscale = -_direcao;
+}
+if(_em_chao)
 	{
-		if(_pulo)
-		{
-			velv = -forca_pulo;
+		if(_direcao != 0){
+			sprite_index = spr_player;
+			show_debug_message("2")
+		}else{
+			sprite_index = spr_player_idle;
+			show_debug_message("3")
 		}
+	}else if (!_em_chao){
+		sprite_index = spr_pulo;
+		show_debug_message("1")
 	}
-	else
-	{
-		velv += gravidade;
-	}
+
+velh = (_direita - _esquerda) * velocidade;	
+	
 }
 
 function hp_player()
@@ -94,6 +93,28 @@ function hp_player()
 	 
 }
 
+function grav(){
+	
+	var _pulo = keyboard_check(vk_space);
+	
+	
+	var _em_chao = place_meeting(x, y + 1, obj_bloco);
+	
+	
+	if(_em_chao)
+	{
+		if(_pulo)
+		{
+			velv = -forca_pulo;
+		}
+	}
+	else
+	{
+		velv += gravidade;
+		
+	}
+	
+}
 function usarItem (indice){
 	 if (indice >= array_length(inventario)) return;
 	 
@@ -151,10 +172,6 @@ function atacar()
         atacando = false;
     }
 
-    if (!atacando)
-    {
-        sprite_index = spr_player;
-    }
 }
 
 function colisao() //mudei a colisão pois tava conflitando com ataque

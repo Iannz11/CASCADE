@@ -21,6 +21,7 @@
     {"name":"spr_chao","order":2,"path":"sprites/spr_chao/spr_chao.yy",},
     {"name":"spr_enemy_run","order":1,"path":"sprites/spr_enemy_run/spr_enemy_run.yy",},
     {"name":"spr_player_ataque","order":4,"path":"sprites/spr_player_ataque/spr_player_ataque.yy",},
+    {"name":"spr_player_idle","order":6,"path":"sprites/spr_player_idle/spr_player_idle.yy",},
     {"name":"spr_pulo","order":5,"path":"sprites/spr_pulo/spr_pulo.yy",},
     {"name":"spr_sky","order":1,"path":"sprites/spr_sky/spr_sky.yy",},
     {"name":"Sprite10","order":3,"path":"sprites/Sprite10/Sprite10.yy",},
