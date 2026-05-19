@@ -1,8 +1,8 @@
 input_player();
-grav()
+grav();
 hp_player();
 colisao();
-
+atacar();
 
 
 if hp <= 0
@@ -20,13 +20,12 @@ if (keyboard_check_pressed(ord("E"))) {
     usarItem(0);
 }
 
-if (cooldown_atk > 0) {
-    cooldown_atk--;
+if (cooldown > 0){
+    cooldown--;
 }
-
-if (keyboard_check_pressed(ord("J")) && cooldown_atk <= 0) {
+/*if (keyboard_check_pressed(ord("J")) and cooldown_atk <= 0) {
 
     atacar();
 
     cooldown_atk = 1; // ainda precisamos de um valor
-}
+}*/

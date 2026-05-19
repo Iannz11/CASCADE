@@ -11,9 +11,11 @@ iframe_max = 100;
 escala = image_xscale;
 atk = 100;
 cooldown_atk = 20;
+cooldown = 0;
 atacando = false;
 pulos = 0;
 max_pulo = 1;
+ 
 
 
 inventario = [];
@@ -54,18 +56,20 @@ function input_player()
 if(_direcao != 0){
 	image_xscale = -_direcao;
 }
-if(_em_chao)
-	{
-		if(_direcao != 0){
-			sprite_index = spr_player;
-			show_debug_message("2")
-		}else{
-			sprite_index = spr_player_idle;
-			show_debug_message("3")
+if (!atacando){
+	if(_em_chao)
+		{
+			if(_direcao != 0){
+				sprite_index = spr_player;
+				show_debug_message("2")
+			}else{
+				sprite_index = spr_player_idle;
+				show_debug_message("3")
+			}
+		}else if (!_em_chao){
+			sprite_index = spr_pulo;
+			show_debug_message("1")
 		}
-	}else if (!_em_chao){
-		sprite_index = spr_pulo;
-		show_debug_message("1")
 	}
 
 velh = (_direita - _esquerda) * velocidade;	
@@ -143,19 +147,18 @@ function usarItem (indice){
 
 function atacar()
 {
-    if (keyboard_check_pressed(ord("J")) && !atacando)
+    if (keyboard_check_pressed(ord("J"))
+    and !atacando
+    and cooldown <= 0)
     {
         atacando = true;
+        cooldown = cooldown_atk;
 
         sprite_index = spr_player_ataque;
         image_index = 0;
+        image_speed = 1;
 
-        var offset = 60;
-
-        if image_xscale < 0
-        {
-            offset = -60;
-        }
+        var offset = 60 * image_xscale;
 
         var hitbox = instance_create_layer(
             x + offset,
@@ -171,36 +174,12 @@ function atacar()
     {
         atacando = false;
     }
-
 }
 
-function colisao() //mudei a colisão pois tava conflitando com ataque
+function colisao()
 {
     var colidiu = place_meeting(x + velh, y, obj_bloco)
                or place_meeting(x, y + velv, obj_bloco);
 
-    if (atacando) return;
-
-    if (colidiu)
-    {
-        image_speed = 0;
-        image_index = 0;
-    }
-    else
-    {
-        var movendo = (velh != 0) or (velv != 0);
-
-        if (movendo)
-        {
-            image_speed = 1;
-
-            if (floor(image_index) == 0)
-                image_index = 3;
-        }
-        else
-        {
-            image_speed = 0;
-            image_index = 0;
-        }
-    }
+    // colisão não controla animação, faz ter bug de disputa entre animações
 }
