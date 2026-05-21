@@ -1,4 +1,13 @@
 input_player();
+var inimigo = instance_place(x + velh, y, obj_enemy_parent);
+
+if inimigo != noone
+{
+    if inimigo.state != "dead"
+    {
+        velh = 0;
+    }
+}
 grav();
 hp_player();
 colisao();

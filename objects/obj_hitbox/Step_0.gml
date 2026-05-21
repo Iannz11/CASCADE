@@ -1,9 +1,21 @@
-with (obj_inimigo)
+with (obj_enemy_parent)
 {
-    if point_distance(x, y, other.x, other.y) < 80
+    if state != "dead"
     {
-        hp -= other.dano;
+        var dist = point_distance(x, y, other.x, other.y);
 
-        instance_destroy(other.id);
+        if dist < 80
+        {
+            hp -= 20;
+
+            if hp > 0
+            {
+                state = "hurt";
+
+                hurt_timer = 15;
+            }
+
+            instance_destroy(other.id);
+        }
     }
 }
