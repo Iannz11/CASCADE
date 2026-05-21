@@ -29,8 +29,8 @@
   ],
   "name":"Room2",
   "parent":{
-    "name":"Cascade",
-    "path":"Cascade.yyp",
+    "name":"room",
+    "path":"folders/room.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

@@ -15,7 +15,7 @@ cooldown = 0;
 atacando = false;
 pulos = 0;
 max_pulo = 1;
- 
+forca_pulo = 10;
 
 
 inventario = [];
@@ -40,7 +40,7 @@ function addItem(id, qtd){
 }
 	
 
-forca_pulo = 14;
+
 
 function input_player()
 {
@@ -56,24 +56,32 @@ function input_player()
 if(_direcao != 0){
 	image_xscale = -_direcao;
 }
-if (!atacando){
-	if(_em_chao)
-		{
-			if(_direcao != 0){
-				sprite_index = spr_player;
-				show_debug_message("2")
-			}else{
-				sprite_index = spr_player_idle;
-				show_debug_message("3")
-			}
-		}else if (!_em_chao){
-			sprite_index = spr_pulo;
-			show_debug_message("1")
-		}
-	}
 
-velh = (_direita - _esquerda) * velocidade;	
-	
+velh = (_direita - _esquerda) * velocidade; 
+
+if (!atacando) {
+    if (_em_chao) {
+        if (velh != 0) {
+            sprite_index = spr_player; // Correndo
+        } else {
+            sprite_index = spr_player_idle; // Parado
+        }
+    } else {
+        sprite_index = spr_pulo;
+    }
+} else {
+    
+    if (velh != 0 and _em_chao) {
+        sprite_index = spr_player_ataqueR; 
+		show_debug_message("1")
+    } else if (velh != 0 and velv != 0 and !_em_chao){
+		sprite_index = spr_player_ataqueP;
+		show_debug_message("2")
+	}
+	else {
+        sprite_index = spr_player_ataque; 
+    }
+	}
 }
 
 function hp_player()
@@ -102,7 +110,7 @@ function grav(){
 	var _pulo = keyboard_check(vk_space);
 	
 	
-	var _em_chao = place_meeting(x, y + 1, obj_bloco);
+	var _em_chao = place_meeting(x, y + 2, obj_bloco);
 	
 	
 	if(_em_chao)
