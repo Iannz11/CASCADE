@@ -1,6 +1,6 @@
 // Inherit the parent event
 event_inherited();
-// música fdp da porr@!!!!!!!!!!!
+
 //audio_play_sound(Battle_theme, 1, true);
 velocidade = 5;
 gravidade = .3;
@@ -16,6 +16,9 @@ atacando = false;
 pulos = 0;
 max_pulo = 1;
 forca_pulo = 10;
+
+hurt = false;
+hurt_timer = 10;
 
 
 inventario = [];
@@ -44,6 +47,14 @@ function addItem(id, qtd){
 
 function input_player()
 {
+	if (hurt)
+{
+    sprite_index = spr_player_hurt;
+    image_speed = 0.3;
+    return;
+}
+	
+	
 	var _esquerda, _direita, _pulo, _direcao;
 	
 	_esquerda = keyboard_check(ord("A"));
@@ -92,16 +103,27 @@ function hp_player()
 	
 
 	if (_col != noone && iframe == 0)
-	{
-	    hp -= 1;
-		iframe = iframe_max;
-		show_debug_message(hp)
-	}if	(iframe > 0){
-		iframe --;
-	}if (hp == 0){
-		game_restart()
-	}
-	 
+{
+    hp -= 1;
+
+    hurt = true;
+    hurt_timer = 20;
+
+    sprite_index = spr_player_hurt;
+    image_index = 0;
+
+    iframe = iframe_max;
+
+    show_debug_message(hp);
+}  if (hurt)
+{
+    hurt_timer--;
+
+    if (hurt_timer <= 0)
+    {
+        hurt = false;
+    }
+}
 	 
 }
 
@@ -188,6 +210,7 @@ function colisao()
 {
     var colidiu = place_meeting(x + velh, y, obj_bloco)
                or place_meeting(x, y + velv, obj_bloco);
+			   
 
     // colisão não controla animação, faz ter bug de disputa entre animações
 }

@@ -1,10 +1,10 @@
 {
   "$GMSprite":"v2",
   "%Name":"spr_enemy_run",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":71,
   "bbox_left":42,
-  "bbox_right":89,
+  "bbox_right":70,
   "bbox_top":5,
   "collisionKind":1,
   "collisionTolerance":0,

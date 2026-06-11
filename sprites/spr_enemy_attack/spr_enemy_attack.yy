@@ -1,10 +1,10 @@
 {
   "$GMSprite":"v2",
   "%Name":"spr_enemy_attack",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":65,
   "bbox_left":41,
-  "bbox_right":92,
+  "bbox_right":80,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,

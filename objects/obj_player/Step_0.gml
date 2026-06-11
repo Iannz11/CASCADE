@@ -1,6 +1,9 @@
 input_player();
 var inimigo = instance_place(x + velh, y, obj_enemy_parent);
-
+if (x > room_width)
+{
+    room_goto_next();
+}
 if inimigo != noone
 {
     if inimigo.state != "dead"

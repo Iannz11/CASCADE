@@ -1,9 +1,9 @@
 {
   "$GMSprite":"v2",
   "%Name":"spr_enemy_hurt",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":65,
-  "bbox_left":30,
+  "bbox_left":40,
   "bbox_right":80,
   "bbox_top":0,
   "collisionKind":1,

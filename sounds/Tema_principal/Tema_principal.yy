@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"Tema_principal",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":93.73896,
+  "exportDir":"",
+  "name":"Tema_principal",
+  "parent":{
+    "name":"Cascade",
+    "path":"Cascade.yyp",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"Tema_principal.mp3",
+  "volume":1.0,
+}
