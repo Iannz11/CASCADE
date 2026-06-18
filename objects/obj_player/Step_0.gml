@@ -1,4 +1,9 @@
 input_player();
+grav();
+atacar();
+hp_player();
+colisao();          // Trata o movimento e impede de entrar nas paredes
+controla_animacao(); // Decide o sprite correto com base no que aconteceu acima
 var inimigo = instance_place(x + velh, y, obj_enemy_parent);
 if (x > room_width)
 {
@@ -11,10 +16,6 @@ if inimigo != noone
         velh = 0;
     }
 }
-grav();
-hp_player();
-colisao();
-atacar();
 
 
 if hp <= 0

@@ -1,167 +1,164 @@
 // Inherit the parent event
 event_inherited();
 
-//audio_play_sound(Battle_theme, 1, true);
+// --- Atributos de Movimentação e Física ---
 velocidade = 5;
-gravidade = .3;
-hp_max = 100;
-hp = 50;
-iframe = 0;
-iframe_max = 100; 
-escala = image_xscale;
-atk = 100;
-cooldown_atk = 20;
-cooldown = 0;
-atacando = false;
+gravidade = 0.3;
+velh = 0;
+velv = 0;
 pulos = 0;
 max_pulo = 1;
 forca_pulo = 10;
 
+// --- Atributos de Combate e Status ---
+hp_max = 100;
+hp = 50;
+atk = 100;
+cooldown_atk = 20;
+cooldown = 0;
+iframe = 0;
+iframe_max = 100; 
+
+// --- Estados ---
+atacando = false;
 hurt = false;
-hurt_timer = 10;
+hurt_timer = 0;
 
-
+// --- Inventário ---
 inventario = [];
-
 itens_db = {
     dorgaGra: {tipo: "cura", valor: 20},
     dorgaPeq: {tipo: "cura", valor: 10}
 }; 
 
-//Essa função iremos remover, eu só coloquei pois queria testar
-function addItem(id, qtd){
-	for (var i = 0; i < array_length(inventario); i++){
-		if (inventario [i].id == id) {
-			inventario[i].quantidade += qtd;
-            return;
-		}
-	}
-			array_push(inventario, {
-        id: id,
-        quantidade: qtd
-    });
-}
-	
+// --- FUNÇÕES DO PLAYER ---
 
-
-
-function input_player()
+function input_player() 
 {
-	if (hurt)
+    // Se estiver machucado, não aceita inputs de movimento
+    if (hurt) {
+        velh = 0;
+        return;
+    }
+    
+    var _esquerda = keyboard_check(ord("A"));
+    var _direita  = keyboard_check(ord("D"));
+    
+    // Define a direção do movimento
+    var _direcao = _direita - _esquerda;
+    velh = _direcao * velocidade; 
+    
+    // Inverte o sprite baseado na direção que está andando
+    if (_direcao != 0) {
+        image_xscale = _direcao; // Simplificado: se _direcao é 1, olha pra direita. Se -1, esquerda.
+    }
+}
+
+function grav() 
 {
-    sprite_index = spr_player_hurt;
-    image_speed = 0.3;
-    return;
-}
-	
-	
-	var _esquerda, _direita, _pulo, _direcao;
-	
-	_esquerda = keyboard_check(ord("A"));
-	_direita = keyboard_check(ord("D"));
-	_pulo = keyboard_check(vk_space);
-	var _em_chao = place_meeting(x, y + 2, obj_bloco);
-	
-	_direcao = _esquerda - _direita;
-	
-if(_direcao != 0){
-	image_xscale = -_direcao;
-}
-
-velh = (_direita - _esquerda) * velocidade; 
-
-if (!atacando) {
+    var _pulo = keyboard_check_pressed(vk_space); // Mudado para pressed para evitar pulo infinito segurando o botão
+    var _em_chao = place_meeting(x, y + 2, obj_bloco);
+    
     if (_em_chao) {
-        if (velh != 0) {
-            sprite_index = spr_player; // Correndo
-        } else {
-            sprite_index = spr_player_idle; // Parado
+        pulos = 0; // Reseta os pulos ao tocar no chão
+        if (_pulo && pulos < max_pulo) {
+            velv = -forca_pulo;
+            pulos++;
         }
     } else {
-        sprite_index = spr_pulo;
+        velv += gravidade;
     }
-} else {
+}
+
+function hp_player() 
+{
+    if (iframe > 0) iframe--;
+
+    var _col = instance_place(x, y, obj_inimigo); 
     
-    if (velh != 0 and _em_chao) {
-        sprite_index = spr_player_ataqueR; 
-		show_debug_message("1")
-    } else if (velh != 0 and velv != 0 and !_em_chao){
-		sprite_index = spr_player_ataqueP;
-		show_debug_message("2")
-	}
-	else {
-        sprite_index = spr_player_ataque; 
+    if (_col != noone && iframe == 0) {
+        hp -= 1;
+        hurt = true;
+        hurt_timer = 15;      
+        iframe = iframe_max;   
+        
+        // --- TRAVA DE SEGURANÇA CONTRA SUMIÇO ---
+        atacando = false;       // Cancela o estado de ataque imediatamente
+        sprite_index = spr_player_hurt; // Força a troca do sprite aqui
+        image_index = 0;        // ESSENCIAL: Reseta o frame para o zero absoluto
+        image_speed = 0.2;
+        
+        show_debug_message("HP: " + string(hp));
+    }  
+    
+    if (hurt) {
+        hurt_timer--;
+        if (hurt_timer <= 0) {
+            hurt = false;
+        }
     }
-	}
+    
+    hp = clamp(hp, 0, hp_max);
 }
 
-function hp_player()
+function atacar() 
 {
-	
-	
-	var _col = instance_place(x + velh, y + velv, obj_inimigo);
-	
+    if (cooldown > 0) cooldown--;
 
-	if (_col != noone && iframe == 0)
-{
-    hp -= 1;
+    if (keyboard_check_pressed(ord("J")) && !atacando && cooldown <= 0 && !hurt) {
+        atacando = true;
+        cooldown = cooldown_atk;
+        
+        sprite_index = spr_player_ataque; // Força o sprite de ataque inicial
+        image_index = 0;                  // Começa do frame zero
+        image_speed = 1;                  // Garante que a animação vai rodar
+        
+        // Criar a hitbox
+        var offset = 60 * image_xscale;
+        var hitbox = instance_create_layer(x + offset, y - 20, "Instances", obj_hitbox);
+        hitbox.alarm[0] = 5;
+    }
 
-    hurt = true;
-    hurt_timer = 20;
-
-    sprite_index = spr_player_hurt;
-    image_index = 0;
-
-    iframe = iframe_max;
-
-    show_debug_message(hp);
-}  if (hurt)
-{
-    hurt_timer--;
-
-    if (hurt_timer <= 0)
-    {
-        hurt = false;
+    // FINALIZA O ATAQUE: Quando chegar no último frame da animação atual
+    if (atacando) {
+        if (image_index >= image_number - 1) {
+            atacando = false;
+        }
     }
 }
-	 
+
+function colisao() 
+{
+    // Colisão Horizontal Perfeita
+    if (place_meeting(x + velh, y, obj_bloco)) {
+        while (!place_meeting(x + sign(velh), y, obj_bloco)) {
+            x += sign(velh);
+        }
+        velh = 0;
+    }
+    x += velh;
+
+    // Colisão Vertical Perfeita
+    if (place_meeting(x, y + velv, obj_bloco)) {
+        while (!place_meeting(x, y + sign(velv), obj_bloco)) {
+            y += sign(velv);
+        }
+        velv = 0;
+    }
+    y += velv;
 }
 
-function grav(){
-	
-	var _pulo = keyboard_check(vk_space);
-	
-	
-	var _em_chao = place_meeting(x, y + 2, obj_bloco);
-	
-	
-	if(_em_chao)
-	{
-		if(_pulo)
-		{
-			velv = -forca_pulo;
-		}
-	}
-	else
-	{
-		velv += gravidade;
-		
-	}
-	
-}
-function usarItem (indice){
-	 if (indice >= array_length(inventario)) return;
-	 
-	 var item_inv = inventario[indice];
-	 var item_db = itens_db[$ item_inv.id];
+function usarItem(indice) 
+{
+    if (indice >= array_length(inventario)) return;
+     
+    var item_inv = inventario[indice];
+    var item_db = itens_db[$ item_inv.id];
 
-	 if (item_inv.quantidade > 0) {
-
+    if (item_inv.quantidade > 0) {
         switch(item_db.tipo) {
-
             case "cura":
                 hp += item_db.valor;
-				show_debug_message(hp)
                 break;
         }
 
@@ -171,46 +168,54 @@ function usarItem (indice){
             array_delete(inventario, indice, 1);
         }
     }
-
     hp = clamp(hp, 0, hp_max);
 }
 
-function atacar()
+// --- CENTRAL DE ANIMAÇÕES (Sua nova função) ---
+function controla_animacao() 
 {
-    if (keyboard_check_pressed(ord("J"))
-    and !atacando
-    and cooldown <= 0)
-    {
-        atacando = true;
-        cooldown = cooldown_atk;
-
-        sprite_index = spr_player_ataque;
-        image_index = 0;
-        image_speed = 1;
-
-        var offset = 60 * image_xscale;
-
-        var hitbox = instance_create_layer(
-            x + offset,
-            y - 20,
-            "Instances",
-            obj_hitbox
-        );
-
-        hitbox.alarm[0] = 5;
+    var _em_chao = place_meeting(x, y + 2, obj_bloco);
+    
+    // --- EFEITO DE PISCAR ---
+    if (iframe > 0) {
+        image_alpha = (iframe div 4) % 2 == 0 ? 0.2 : 1.0;
+    } else {
+        image_alpha = 1.0; 
     }
-
-    if (atacando && image_index >= image_number - 1)
-    {
-        atacando = false;
+    
+    // PRIORIDADE 1: Tomando Dano (Hurt)
+    if (hurt) {
+        if (sprite_index != spr_player_hurt) {
+            sprite_index = spr_player_hurt;
+            image_index = 0; // Segunda trava de segurança para o frame
+        }
+        image_speed = 0.2; 
+        return; 
     }
-}
-
-function colisao()
-{
-    var colidiu = place_meeting(x + velh, y, obj_bloco)
-               or place_meeting(x, y + velv, obj_bloco);
-			   
-
-    // colisão não controla animação, faz ter bug de disputa entre animações
+    
+    // PRIORIDADE 2: Atacando
+    if (atacando) {
+        if (velh != 0 && _em_chao) {
+            if (sprite_index != spr_player_ataqueR) sprite_index = spr_player_ataqueR;
+        } else if (!_em_chao) {
+            if (sprite_index != spr_player_ataqueP) sprite_index = spr_player_ataqueP;
+        } else {
+            if (sprite_index != spr_player_ataque) sprite_index = spr_player_ataque;
+        }
+        image_speed = 1; 
+        return; 
+    }
+    
+    // PRIORIDADE 3: Movimentação Comum
+    image_speed = 1; 
+    
+    if (_em_chao) {
+        if (velh != 0) {
+            sprite_index = spr_player;       
+        } else {
+            sprite_index = spr_player_idle;  
+        }
+    } else {
+        sprite_index = spr_pulo;             
+    }
 }
